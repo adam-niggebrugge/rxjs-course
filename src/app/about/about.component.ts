@@ -26,24 +26,17 @@ import {createHttpObservable} from '../common/util';
 export class AboutComponent implements OnInit {
 
     ngOnInit() {
-        document.addEventListener('click', e => {
-            console.log(e);
+        //Placing a $ at the end of the variable means this is RxJs observable
+        const interval$ = interval(1000); //Define the stream time interval. 
 
-            setTimeout(() => {
-                console.log("Time out has elapsed from setTimeout()")
+        //By subscribing to the definition, will result in a stream of number values that emit every 1 second
+        interval$.subscribe(val => {
+            console.log(`Stream 1 => ${val}`);
+        });
 
-                let counter = 0;
-
-                setInterval(() => {
-                    console.log(counter);
-                    counter++;
-                }, 1000);
-            }, 3000)
-          })
-
-       
-      
-
+        interval$.subscribe(val => {
+            console.log(`Stream 22 => ${val}`);
+        });
     }
 
   
