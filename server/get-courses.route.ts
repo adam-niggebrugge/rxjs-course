@@ -3,7 +3,8 @@
 import {Request, Response} from 'express';
 import {COURSES} from "./db-data";
 
-
+const CORS_HEADER = "Access-Control-Allow-Origin";
+const allowed_dev_proxy = "http://localhost:4200";
 
 export function getAllCourses(req: Request, res: Response) {
 
@@ -18,7 +19,7 @@ export function getAllCourses(req: Request, res: Response) {
 
         setTimeout(() => {
 
-             res.status(200).json({payload:Object.values(COURSES)});
+             res.status(200).set(CORS_HEADER, allowed_dev_proxy).json({payload:Object.values(COURSES)});
 
         }, 200);
 
@@ -34,5 +35,5 @@ export function getCourseById(req: Request, res: Response) {
 
     const course = courses.find(course => course.id == courseId);
 
-    res.status(200).json(course);
+    res.status(200).set(CORS_HEADER, allowed_dev_proxy).json(course);
 }

@@ -5,7 +5,8 @@ import {Request, Response} from 'express';
 import {LESSONS} from "./db-data";
 import {setTimeout} from "timers";
 
-
+const CORS_HEADER = "Access-Control-Allow-Origin";
+const allowed_dev_proxy = "http://localhost:4200";
 
 export function searchLessons(req: Request, res: Response) {
 
@@ -32,7 +33,7 @@ export function searchLessons(req: Request, res: Response) {
     const lessonsPage = lessons.slice(initialPos, initialPos + pageSize);
 
     setTimeout(() => {
-        res.status(200).json({payload: lessonsPage});
+      res.status(200).set(CORS_HEADER, allowed_dev_proxy).json({payload: lessonsPage});
     },1000);
 
 
