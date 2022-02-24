@@ -32,7 +32,14 @@ export class AboutComponent implements OnInit {
     
      const http$ = createHttpObservable('/courses')
 
-      http$.subscribe(
+     //Whenever you want to derive new observables from existing use the pipe
+     const courses$ = http$
+        .pipe(
+            map(res => Object.values(res["payload"]) )
+        )
+      
+        //will now take course and should output to console
+      courses$.subscribe(
           courses => console.log(courses),
           () => {}, //or noop no operation, simple
           () => console.log('complete')
