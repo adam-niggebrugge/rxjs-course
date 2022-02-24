@@ -26,11 +26,27 @@ import {createHttpObservable} from '../common/util';
 export class AboutComponent implements OnInit {
 
     ngOnInit() {
+        document.addEventListener('click', e => {
+            console.log(e);
 
+            setTimeout(() => {
+                console.log("Time out has elapsed from setTimeout()")
+
+                let counter = 0;
+
+                setInterval(() => {
+                    console.log(counter);
+                    counter++;
+                }, 1000);
+            }, 3000)
+          })
+
+       
+      
 
     }
 
-
+  
 }
 
 
