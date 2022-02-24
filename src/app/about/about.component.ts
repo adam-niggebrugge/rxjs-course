@@ -30,16 +30,31 @@ export class AboutComponent implements OnInit {
         const interval$ = timer(3000, 1000); //Define the stream time interval. 
 
         // //By subscribing to the definition, will result in a stream of number values that emit every 1 second
-        interval$.subscribe(val => {
+        const sub = interval$.subscribe(val => {
             console.log(`Stream 1 => ${val}`);
         });
+
+        //This will allow us to unsubscribe from a stream after a set time. 
+        setTimeout(() => sub.unsubscribe(), 5000);
+        //Displays 
+        //Stream 1 => 0
+        //Stream 1 => 1
+        //then completes. only 2 values shown because timer waits 3 seconds to start, this time is counted for setTimeout() method
 
         // interval$.subscribe(val => {
         //     console.log(`Stream 22 => ${val}`);
         // });
         const click$ = fromEvent(document, 'click');
 
-        click$.subscribe(e => console.log(e));
+        // Can have multiple arguments, next, error, completion
+        click$.subscribe(
+            
+            e => console.log(e),
+
+            err => console.log(err),
+
+            () => console.log(`Stream has completed`)
+        );
     }
 
   
