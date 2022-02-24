@@ -27,16 +27,19 @@ export class AboutComponent implements OnInit {
 
     ngOnInit() {
         //Placing a $ at the end of the variable means this is RxJs observable
-        const interval$ = interval(1000); //Define the stream time interval. 
+        const interval$ = timer(3000, 1000); //Define the stream time interval. 
 
-        //By subscribing to the definition, will result in a stream of number values that emit every 1 second
+        // //By subscribing to the definition, will result in a stream of number values that emit every 1 second
         interval$.subscribe(val => {
             console.log(`Stream 1 => ${val}`);
         });
 
-        interval$.subscribe(val => {
-            console.log(`Stream 22 => ${val}`);
-        });
+        // interval$.subscribe(val => {
+        //     console.log(`Stream 22 => ${val}`);
+        // });
+        const click$ = fromEvent(document, 'click');
+
+        click$.subscribe(e => console.log(e));
     }
 
   
