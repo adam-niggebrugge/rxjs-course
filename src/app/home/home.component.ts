@@ -5,7 +5,6 @@ import {catchError, delay, delayWhen, finalize, map, retryWhen, shareReplay, tap
 import {createHttpObservable} from '../common/util';
 import {Store} from '../common/store.service';
 
-
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -16,7 +15,6 @@ export class HomeComponent implements OnInit {
     beginnerCourses$: Observable<Course[]>;
 
     advancedCourses$: Observable<Course[]>;
-
 
     constructor(private store:Store) {
 
@@ -29,8 +27,10 @@ export class HomeComponent implements OnInit {
         //Whenever you want to derive new observables from existing use the pipe
         const courses$ = http$
            .pipe(
-               map(res => Object.values(res["payload"]) )
-           )
+               tap(() => console.log(`Http request executed.`)), //Operator use to produce side effects, could be used to update something outside the observable shape, like a variable property of the component 
+               map(res => Object.values(res["payload"]) ),
+               shareReplay() //Since the data is the same for multiple parts, this will allow this stream to be shared across multiple subscribers. This stream will now be replayed to each new subscriber
+           );
          
         this.advancedCourses$ = courses$
             .pipe(
