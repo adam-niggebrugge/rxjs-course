@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
 
-        const http$ = createHttpObservable('/courses')
+        const http$ : Observable<Course[]> = createHttpObservable('/courses')
 
         //Whenever you want to derive new observables from existing use the pipe
         const courses$ = http$
