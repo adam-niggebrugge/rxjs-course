@@ -13,9 +13,9 @@ import {Store} from '../common/store.service';
 })
 export class HomeComponent implements OnInit {
 
-    beginnerCourses: Course[];
+    beginnerCourses$: Course[];
 
-    advancedCourses: Course[];
+    advancedCourses$: Course[];
 
 
     constructor(private store:Store) {
@@ -32,12 +32,34 @@ export class HomeComponent implements OnInit {
                map(res => Object.values(res["payload"]) )
            )
          
-           //will now take course and should output to console
-         courses$.subscribe(
-             courses => console.log(courses),
-             () => {}, //or noop no operation, simple
-             () => console.log('complete')
-         );
+           //What was shown in the video but results in "filter" not being a method/function of courses
+        //  courses$.subscribe(
+        //     courses => {
+        //         console.log(courses);
+            
+        //         this.beginnerCourses = courses.fiter(course => course.category == "BEGINNER");
+
+        //         this.advancedCourses = courses.fiter(course => course.category == "ADVANCED");
+
+
+        //     },
+        //     () => {}, //or noop no operation, simple
+        //     () => console.log('complete')
+        //  );
+
+        this.advancedCourses$ = courses$
+            .pipe(
+                map((courses: Course[]) =>
+                    courses.filter(course => course.category == "ADVANCED")
+                )
+            );
+
+        this.beginnerCourses$ = courses$
+            .pipe(
+                map((courses: Course[]) =>
+                    courses.filter(course => course.category == "BEGINNER")
+                )
+            );
     }    
 
 }
